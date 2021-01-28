@@ -1,12 +1,14 @@
 <template>
   <Header :totalIncome="state.totalIncome" />
   <Form @add-income="AddIncome" /> 
+  <IncomeList :state="state" />
 </template>
 
 <script>
 import { reactive, computed } from 'vue';
 import Header from './components/Header';
 import Form from './components/Form'
+import IncomeList from './components/IncomeList'
 
 export default {
   setup() {
@@ -20,6 +22,16 @@ export default {
             temp += state.income[i].value;
           }
         }
+
+        return temp;
+      }),
+      sortedIncome: computed(() => {
+        let temp = [];
+
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        temp = state.income.sort(function (a, b) {
+          return b.date - a.date;
+        });
 
         return temp;
       })
@@ -36,13 +48,13 @@ export default {
         date: newD.getTime()
       }];
 
-      console.log(state.income);
     }
 
 
     return {
       Header,
       Form,
+      IncomeList,
       state,
       AddIncome
     }

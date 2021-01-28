@@ -1,13 +1,28 @@
 <template>
-  
+  <div class="income-list">
+      <IncomeItem v-for="data in state.sortedIncome" :key="data.id" :income="data" />
+  </div>
 </template>
 
 <script>
-export default {
 
+import IncomeItem from './IncomeItem'
+export default {
+    props: {
+        state: Object
+    },
+    setup(){
+        return {
+            IncomeItem
+        }
+    }
 }
+
 </script>
 
-<style>
-
+<style scoped>
+.income-list {
+    margin: 30px;
+    padding: 15px;
+}
 </style>
