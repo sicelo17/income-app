@@ -1,9 +1,9 @@
 <template>
-  <form action="">
-      <input type="text" placeholder="Description...">
-      <input type="number" placeholder="Value...">
-      <input type="date" placeholder="Date">
-      <input type="submit" value="Submit">
+  <form @submit.prevent="formHandler">
+      <input type="text" placeholder="Description..." v-model="formData.desc" />
+      <input type="number" placeholder="Value..." v-model="formData.value" />
+      <input type="date" placeholder="Date" v-model="formData.date" />
+      <input type="submit" value="Submit" />
   </form>
 </template>
 
@@ -16,7 +16,28 @@ export default {
         state: Object
     },
     setup(props, { emit }){
-        
+        const formData = reactive({
+            desc: null,
+            value: null,
+            date: null
+        });
+
+        let formHandler = () => {
+            emit("add-income", {
+                desc: formData.desc,
+                value: formData.value,
+                date: formData.date
+            });
+
+            formData.desc = null;
+            formData.value = null;
+            formData.date = null;
+        }
+
+        return {
+            formHandler,
+            formData
+        }
     }
 }
 </script>
