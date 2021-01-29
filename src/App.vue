@@ -1,77 +1,38 @@
 <template>
-  <Header :totalIncome="state.totalIncome" />
-  <Form @add-income="AddIncome" /> 
-  <IncomeList :state="state" />
+  <Header />
+  <router-view/>
 </template>
-
 <script>
-import { reactive, computed } from 'vue';
-import Header from './components/Header';
-import Form from './components/Form'
-import IncomeList from './components/IncomeList'
 
+import Header from "./components/Header"
 export default {
-  setup() {
-    const state = reactive({
-      income: [],
-      totalIncome: computed(() =>{
-        let temp = 0;
-
-        if(state.income.length > 0) {
-          for (let i = 0; i < state.income.length; i++) {
-            temp += state.income[i].value;
-          }
-        }
-
-        return temp;
-      }),
-      sortedIncome: computed(() => {
-        let temp = [];
-
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        temp = state.income.sort(function (a, b) {
-          return b.date - a.date;
-        });
-
-        return temp;
-      })
-    });
-
-    const AddIncome = (data) => {
-      let d = data.date.split("-");
-      let newD = new Date(d[0], d[1], d[2]);
-
-      state.income = [...state.income, {
-        id: Date.now(),
-        desc: data.desc,
-        value: parseInt(data.value),
-        date: newD.getTime()
-      }];
-
-    }
-
-
-    return {
-      Header,
-      Form,
-      IncomeList,
-      state,
-      AddIncome
-    }
+  name: "app",
+  components: {
+    Header
   }
 }
 </script>
-
 <style>
-* {
-  margin: 0;
-  box-sizing: border-box;
-  padding: 0;
-  font-family: 'Fira sans', sans-serif;
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 
-body {
-  background: #eee;
+#nav {
+  padding: 30px;
 }
 
+#nav a {
+  font-weight: bold;
+  color: #eee;
+  text-decoration: none;
+}
+
+#nav a.router-link-exact-active {
+  color: #007cc7;
+  text-decoration: underline;
+}
 </style>

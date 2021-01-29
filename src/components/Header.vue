@@ -1,7 +1,11 @@
 <template>
    <header>
-       <h1>Income Tracker</h1>
-   <div class="total-income">${{ totalIncome }} </div>
+    <h1>Income Records</h1>
+    <div id="nav">
+        <router-link to="/">Income</router-link> |
+        <router-link to="/about">About</router-link>
+    </div>
+    <div class="total-income">${{ totalIncome }} </div>
    </header>
 </template>
 
